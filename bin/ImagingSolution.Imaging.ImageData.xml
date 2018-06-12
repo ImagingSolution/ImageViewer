@@ -1,0 +1,531 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ImagingSolution.Imaging.ImageData</name>
+    </assembly>
+    <members>
+        <member name="T:ImagingSolution.Imaging.ImageData">
+            <summary>
+            画像データ管理クラス
+            </summary>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.ZeroMemory(System.IntPtr,System.Int32)">
+            <summary>
+            メモリを０で初期化する(Win32API)
+            </summary>
+            <param name="dest">メモリのポインタ</param>
+            <param name="size">メモリのバイト数</param>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.CopyMemory(System.IntPtr,System.IntPtr,System.Int32)">
+            <summary>
+            メモリのコピー(Win32API)
+            </summary>
+            <param name="dst">コピー先のポインタ</param>
+            <param name="src">コピー元のポインタ</param>
+            <param name="size">コピーするメモリのバイト数</param>
+        </member>
+        <member name="T:ImagingSolution.Imaging.ImageData.BorderTypeEnum">
+            <summary>
+            画像の輪郭参照方法の種類
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BorderTypeEnum.ToZero">
+            <summary>
+            外側の場合、輝度値を０にする
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BorderTypeEnum.Mirror">
+            <summary>
+            折り返し
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BorderTypeEnum.Clamp">
+            <summary>
+            輪郭固定
+            </summary>
+        </member>
+        <member name="T:ImagingSolution.Imaging.ImageData.InterpolationModeEnum">
+            <summary>
+            補間モードの種類
+            </summary>
+        </member>
+        <member name="T:ImagingSolution.Imaging.ImageData.MinusValueModeEnum">
+            <summary>
+            マイナスの値設定時の処理
+            </summary>
+        </member>
+        <member name="T:ImagingSolution.Imaging.ImageData.BITMAPFILEHEADER">
+            <summary>
+            Win32APIのBITMAPFILEHEADER定義
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPFILEHEADER.bfType">
+            <summary>
+            ファイルタイプ
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPFILEHEADER.bfSize">
+            <summary>
+            ファイル全体のサイズ
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPFILEHEADER.bfReserved1">
+            <summary>
+            予約領域
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPFILEHEADER.bfReserved2">
+            <summary>
+            予約領域
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPFILEHEADER.bfOffBits">
+            <summary>
+            ファイルの先頭から画像データまでのオフセット数（バイト数）
+            </summary>
+        </member>
+        <member name="T:ImagingSolution.Imaging.ImageData.BITMAPINFOHEADER">
+            <summary>
+            Win32APIのBITMAPINFOHEADER定義
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPINFOHEADER.biSize">
+            <summary>
+            BITMAPINFOHEADERのサイズ (40)
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPINFOHEADER.biWidth">
+            <summary>
+            ビットマップの幅
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPINFOHEADER.biHeight">
+            <summary>
+            ビットマップの高さ
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPINFOHEADER.biPlanes">
+            <summary>
+            プレーン数(常に1)
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPINFOHEADER.biBitCount">
+            <summary>
+            1ピクセルあたりのビット数(1,4,8,16,24,32)
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPINFOHEADER.biCompression">
+            <summary>
+            圧縮形式
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPINFOHEADER.biSizeImage">
+            <summary>
+            イメージのサイズ(バイト数)
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPINFOHEADER.biXPelsPerMeter">
+            <summary>
+            ビットマップの水平解像度
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPINFOHEADER.biYPelsPerMeter">
+            <summary>
+            ビットマップの垂直解像度
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPINFOHEADER.biClrUsed">
+            <summary>
+            カラーパレット数
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData.BITMAPINFOHEADER.biClrImportant">
+            <summary>
+            重要なカラーパレットのインデックス
+            </summary>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.InitBuffer(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            コンストラクタの共通部分
+            </summary>
+            <param name="width"></param>
+            <param name="height"></param>
+            <param name="imageBit"></param>
+            <param name="bufferBit"></param>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.#ctor(System.Int32,System.Int32,System.Drawing.Imaging.PixelFormat)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="width">画像の幅</param>
+            <param name="height">画像の高さ</param>
+            <param name="format">画像のフォーマット</param>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.#ctor(System.Int32,System.Int32,System.Int32,System.Drawing.Imaging.PixelFormat,System.IntPtr)">
+            <summary>
+            コンストラクタ
+            外部メモリ参照
+            </summary>
+            <param name="width">画像の幅</param>
+            <param name="height">画像の高さ</param>
+            <param name="stride">画像１行あたりのバイト数</param>
+            <param name="format">画像のフォーマット</param>
+            <param name="scan0">画像データのポインタ</param>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.#ctor(System.Int32,System.Int32,System.Int32,System.Int32)">
+            <summary>
+            コンストラクタ
+            </summary>
+            <param name="width">画像の幅</param>
+            <param name="height">画像の高さ</param>
+            <param name="imageBit">画像のビット数(8～16, 24, 30, 32)</param>
+            <param name="bufferBit">画像メモリのビット数(8, 16, 24, 32)</param>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.Item(System.Int32,System.Int32)">
+            <summary>
+            輝度値を取得、設定します。
+            </summary>
+            <param name="row">画像の行の位置(y座標)</param>
+            <param name="column">画像の列の位置(x座標)</param>
+            <returns></returns>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.Item(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            輝度値を取得、設定します。
+            </summary>
+            <param name="row">画像の行の位置(y座標)</param>
+            <param name="column">画像の列の位置(x座標)</param>
+            <param name="ch">色番号 0, 1, 2</param>
+            <returns></returns>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.Item(System.Single,System.Single)">
+            <summary>
+            輝度値を取得、設定します。
+            </summary>
+            <param name="row">画像の行の位置(y座標)</param>
+            <param name="column">画像の列の位置(x座標)</param>
+            <returns></returns>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.Item(System.Single,System.Single,System.Int32)">
+            <summary>
+            輝度値を取得、設定します。
+            </summary>
+            <param name="row">画像の行の位置(y座標)</param>
+            <param name="column">画像の列の位置(x座標)</param>
+            <param name="ch">色番号 0, 1, 2</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.Dispose">
+            <summary>
+            メモリの解放を行います。
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData._widthOriginal">
+            プロパティ
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.Width">
+            <summary>
+            画像の幅
+            </summary>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.Height">
+            <summary>
+            画像の高さ
+            </summary>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.Stride">
+            <summary>
+            画像データ幅のバイト数
+            </summary>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.Channel">
+            <summary>
+            画像のチャンネル数
+            </summary>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.PixelFormat">
+            <summary>
+            画像のピクセルフォーマット
+            </summary>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.ImageBit">
+            <summary>
+            画像のビット数
+            </summary>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.BufferBit">
+            <summary>
+            画像メモリのビット数
+            </summary>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.Scan0">
+            <summary>
+            画像データのポインタ
+            </summary>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.ByteAlignment">
+            <summary>
+            アライメント単位のバイト数
+            </summary>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.BorderType">
+            <summary>
+             画像の輪郭位置の参照方法の取得、設定
+            </summary>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.Region">
+            <summary>
+             画像の輪郭位置の参照方法の取得、設定
+            </summary>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.CalcStride(System.Int32,System.Int32)">
+            <summary>
+            ストライドの計算
+            </summary>
+            <param name="Width">画像の幅</param>
+            <param name="BitCount">画像データ（メモリ）のビット数</param>
+            <returns></returns>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.InterpolationMode">
+            <summary>
+             画像の輪郭位置の参照方法の取得、設定
+            </summary>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.BiCubicVal">
+            <summary>
+            biCubic計算時の係数
+            </summary>
+        </member>
+        <member name="P:ImagingSolution.Imaging.ImageData.MinusValueMode">
+            <summary>
+            マイナスの値設定時の処理
+            </summary>
+        </member>
+        <member name="F:ImagingSolution.Imaging.ImageData._scan0Origin">
+            メモリ関連
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.AlignedMalloc(System.Int32,System.Int32,System.Boolean,System.IntPtr@)">
+            <summary>
+            アライメントされたメモリの確保
+            </summary>
+            <param name="size">確保するメモリのサイズ</param>
+            <param name="byteAlignment">何バイトアライメントにするか？4, 8, 16, 32,・・・</param>
+            <param name="zeroClear"></param>
+            <param name="scan0Origin">確保されたメモリのポインタ</param>
+            <returns>アライメント調整されたメモリのポインタ</returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.AlignedFree">
+            <summary>
+            メモリの解放
+            </summary>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.ZeroClear">
+            <summary>
+            画像の輝度値を０に初期化します。
+            </summary>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.IsEqualImageSize(ImagingSolution.Imaging.ImageData,ImagingSolution.Imaging.ImageData)">
+            <summary>
+            imgAとimgBの画像の大きさを比較する
+            </summary>
+            <param name="imgA">比較するImageDataクラスオブジェクト</param>
+            <param name="imgB">比較するImageDataクラスオブジェクト</param>
+            <returns>大きさが同じ場合true、異なる場合false</returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.ToBitmap">
+            <summary>
+            ImageDataクラスオブジェクトをBitmapクラスオブジェクトへ変換
+            </summary>
+            <returns>Bitmapクラスオブジェクト</returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.Clone(System.Boolean)">
+            <summary>
+            クローンの作成
+            </summary>
+            <param name="copyFlg">画像データをコピーする場合はtrue、しない場合はfalse</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.Clone">
+            <summary>
+            クローンの作成
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.CopyTo(ImagingSolution.Imaging.ImageData)">
+            <summary>
+            画像のコピー
+            </summary>
+            <param name="dst">コピー先のImageDataクラスオブジェクト</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.ResetRegion">
+            <summary>
+            Regionの初期化
+            </summary>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.LoadBitmapBinary(System.String)">
+            <summary>
+            ビットマップファイルをバイナリで読込
+            </summary>
+            <param name="filename"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.Save(System.String)">
+            <summary>
+            画像データのファイル保存
+            </summary>
+            <param name="fileName">ファイル名(*.bmp,)</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.NoBoundaryToBitmap">
+            <summary>
+            Strideが４の倍数でない場合のBitmap変換
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Addition(ImagingSolution.Imaging.ImageData,ImagingSolution.Imaging.ImageData)">
+            <summary>
+            ２つの画像の各画素の輝度値を加算する
+            </summary>
+            <param name="imgA">加算する画像A</param>
+            <param name="imgB">加算する画像B</param>
+            <returns>imgAとimgBが加算された画像</returns>      
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Addition(ImagingSolution.Imaging.ImageData,System.Int32)">
+            <summary>
+            画像の全輝度値にvalueを加算
+            </summary>
+            <param name="img">加算される画像</param>
+            <param name="value">加算する値</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Addition(System.Int32,ImagingSolution.Imaging.ImageData)">
+            <summary>
+            画像の全輝度値にvalueを加算
+            </summary>
+            <param name="value">加算する値</param>
+            <param name="img">加算される画像</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Addition(ImagingSolution.Imaging.ImageData,System.Int32[])">
+            <summary>
+            画像の全輝度値に各チャンネルごとにvalue[]を加算
+            </summary>
+            <param name="img">加算される画像</param>
+            <param name="value">加算する値の配列 b, g, r, aの順番に格納すること</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Addition(System.Int32[],ImagingSolution.Imaging.ImageData)">
+            <summary>
+            画像の全輝度値に各チャンネルごとにvalue[]を加算
+            </summary>
+            <param name="value">加算する値の配列 b, g, r, aの順番に格納すること</param>
+            <param name="img">加算される画像</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Subtraction(ImagingSolution.Imaging.ImageData,System.Int32)">
+            <summary>
+            画像の全輝度値にvalueを減算
+            </summary>
+            <param name="img">減算される画像</param>
+            <param name="value">減算する値</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Subtraction(System.Int32,ImagingSolution.Imaging.ImageData)">
+            <summary>
+            画像の全輝度値にvalueを減算
+            </summary>
+            <param name="value">減算する値</param>
+            <param name="img">減算する画像</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Subtraction(ImagingSolution.Imaging.ImageData,System.Int32[])">
+            <summary>
+            画像の全輝度値に各チャンネルごとにvalue[]を減算
+            </summary>
+            <param name="img">減算される画像</param>
+            <param name="value">加算する値の配列 b, g, r, aの順番に格納すること</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Subtraction(System.Int32[],ImagingSolution.Imaging.ImageData)">
+            <summary>
+            画像の全輝度値に各チャンネルごとにvalue[]を減算
+            </summary>
+            <param name="img">減算される画像</param>
+            <param name="value">加算する値の配列 b, g, r, aの順番に格納すること</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Multiply(ImagingSolution.Imaging.ImageData,ImagingSolution.Imaging.ImageData)">
+            <summary>
+            画像の全輝度値にimgAとimgBを積算
+            </summary>
+            <param name="imgA">積算される画像</param>
+            <param name="imgB">積算する画像</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Multiply(ImagingSolution.Imaging.ImageData,System.Double)">
+            <summary>
+            画像の全輝度値にvalueを積算
+            </summary>
+            <param name="img">積算される画像</param>
+            <param name="value">積算する値</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Multiply(System.Int32,ImagingSolution.Imaging.ImageData)">
+            <summary>
+            画像の全輝度値にvalueを積算
+            </summary>
+            <param name="value">積算する値</param>
+            <param name="img">積算される画像</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Multiply(ImagingSolution.Imaging.ImageData,System.Double[])">
+            <summary>
+            画像の全輝度値に各チャンネルごとにvalue[]を積算
+            </summary>
+            <param name="img">積算される画像</param>
+            <param name="value">積算する値の配列 b, g, r, aの順番に格納すること</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Multiply(System.Double[],ImagingSolution.Imaging.ImageData)">
+            <summary>
+            画像の全輝度値に各チャンネルごとにvalue[]を積算
+            </summary>
+            <param name="value">積算する値の配列 b, g, r, aの順番に格納すること</param>
+            <param name="img">積算する画像</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Division(ImagingSolution.Imaging.ImageData,System.Double)">
+            <summary>
+            画像の全輝度値にvalueを徐算
+            </summary>
+            <param name="img">徐算される画像</param>
+            <param name="value">徐算する値</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Division(System.Double,ImagingSolution.Imaging.ImageData)">
+            <summary>
+            画像の全輝度値にvalueを徐算
+            </summary>
+            <param name="value">徐算する値</param>
+            <param name="img">徐算される画像</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Division(ImagingSolution.Imaging.ImageData,System.Double[])">
+            <summary>
+            画像の全輝度値に各チャンネルごとにvalue[]を徐算
+            </summary>
+            <param name="img">徐算する画像</param>
+            <param name="value">徐算する値の配列 b, g, r, aの徐算に格納すること</param>
+            <returns></returns>
+        </member>
+        <member name="M:ImagingSolution.Imaging.ImageData.op_Division(System.Double[],ImagingSolution.Imaging.ImageData)">
+            <summary>
+            画像の全輝度値に各チャンネルごとにvalue[]を徐算
+            </summary>
+            <param name="value">徐算する値の配列 b, g, r, aの徐算に格納すること</param>
+            <param name="img">徐算する画像</param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
